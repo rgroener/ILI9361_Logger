@@ -22,6 +22,12 @@
 
 #include "ILI9163.h"
 
+
+
+#define top_to_bottom  0
+#define bottom_to_top  1
+#define TFA  0                                        // Top Fixed Area 0 pixel
+#define BFA  0 
 void LCD_Draw_Line(int x0, int y0, int x1, int y1, color_t color)
 {
 	int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
@@ -134,28 +140,90 @@ void LCD_Draw_Circle(uint8_t x0, uint8_t y0, uint8_t r, color_t color)
 }
 
 
-
+void setScrollDefinition(uint8_t top_fix_height, uint8_t bottom_fix_height, uint8_t _scroll_direction)
+{
+  uint8_t scroll_height;
+  scroll_height = LCD_Height - top_fix_height - bottom_fix_height;
+  LCD_CMD(0x33);//vertical scroll definition
+  LCD_DTA(0x00);
+  LCD_DTA(top_fix_height);
+  LCD_DTA(0x00);
+  LCD_DTA(scroll_height);
+  LCD_DTA(0x00);
+  LCD_DTA(bottom_fix_height);
+  LCD_CMD(0x36);//MADCTL
+  if(_scroll_direction)
+  {
+	  
+	LCD_DTA(0xD8);
+    /*if(_tft_type == 0)
+    {
+      
+    }
+    if(_tft_type == 1)
+    {
+      LCD_DTA(0xD0);
+    }
+    if(_tft_type == 2)
+    {
+      LCD_DTA(0x18);
+    }*/
+  }
+  else
+  {
+	LCD_DTA(0xC8);
+    /*if(_tft_type == 0)
+    {
+      
+    }
+    if(_tft_type == 1)
+    {
+      LCD_DTA(0xC0);
+    }
+    if(_tft_type == 2)
+    {
+      LCD_DTA(0x08);
+    }*/
+  }
+}
+void VerticalScroll(uint8_t _vsp) 
+{
+  LCD_CMD(0x37);//VSCRSADD
+  LCD_DTA(0x00);
+  LCD_DTA(_vsp);
+}
 
 
 uint8_t o=0;
-
+uint8_t scroll = 0;
 int main( void )
 {
 	DDRB |= (1<<PB2); 	//Backlight pin
 	PORTB |= (1<<PB2);	//Backlight on
 	 /* init display, set default orientation (optional) */
 	LCD_init();
-	o = LCD_ROT_270;
+	o = LCD_ROT_90;
 	LCD_Orientation(o);
 	LCD_FillScreen( LCD_RGB(255,255,255) ); /* white where R,G,B are at max. value 255 */
 	
 	LCD_Puts("Red",0,10,LCD_RED,LCD_WHITE);
-	LCD_Puts("Green",40,10,LCD_GREEN,LCD_WHITE);
+	/*LCD_Puts("Green",40,10,LCD_GREEN,LCD_WHITE);
 	LCD_Puts("Blue",80,10,LCD_BLUE,LCD_WHITE);
 	LCD_ShowImage( 0,30,DFTIMG_WIDTH,DFTIMG_HEIGHT,(const unsigned char*)DFTIMG_PTR);/* ShowImage is for high/true color */
-	LCD_FillRect( 33,44, 33, 1, LCD_RED );
+	/*LCD_FillRect( 33,44, 33, 1, LCD_RED );
 	LCD_Draw_Fill_Circle(30, 90, 10,LCD_BLUE);
 	LCD_Draw_Line(100, 100, 124, 124,LCD_BLACK);
-
+*/
+	setScrollDefinition(TFA, BFA, 1);
+	while(1)
+	{
+		VerticalScroll(scroll + TFA);
+		scroll++;
+		if(scroll >= (LCD_Height - TFA - BFA))
+		scroll = 0;
+		_delay_ms(100);
+	
+	
+	}
 	return 0;
 }
