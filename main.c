@@ -30,7 +30,78 @@ uint32_t pressure;
 uint32_t humidity;
 int32_t altitude;
 
+uint16_t test=0;
+
 char string[24];
+
+uint16_t vor_komma(uint32_t value);
+uint8_t nach_komma(uint32_t value);
+
+void LCD_Line(int x0, int y0, int x1, int y1, int color)
+{
+	int dx = abs(x1-x0), sx = x0<x1 ? 1 : -1;
+	int dy = abs(y1-y0), sy = y0<y1 ? 1 : -1;
+	
+	int err = (dx>dy ? dx : -dy) /2, e2;
+	for(;;)
+	{
+		LCD_SetPixel(x0, y0, color);
+		if(x0==x1 && y0==y1)break;
+		e2 = err;
+		if(e2 >-dx) {err -= dy; x0 += sx;}
+		if(e2 < dy) {err += dx; y0 += sy;}
+	}
+}
+
+int main( void )
+{
+	DDRB |= (1<<PB2); 	//Backlight pin
+	PORTB |= (1<<PB2);	//Backlight on
+	
+	 /* init display, set default orientation (optional) */
+	LCD_init();
+	LCD_Orientation(LCD_ROT_180);
+	LCD_FillScreen( LCD_RGB(255,255,255) ); /* white where R,G,B are at max. value 255 */
+	
+	//LCD_ShowImage( 0,0,64,64,(const unsigned char*)ili9163_image);/* ShowImage is for high/true color */
+	temperature=0;
+	pressure=0;
+	humidity =0;
+	altitude=0;
+ 
+  // init sensor
+  bme280_init();
+ 
+  
+	while(1)
+	{
+		/*
+		temperature = bme280_readTemperature(); // in °C
+		pressure = bme280_readPressure()/100; // in mbar
+		humidity = bme280_readHumidity(); // in %
+		altitude = bme280_readAltitude(102000); // 
+		
+		//itoa(humidity, string, 10);
+		//LCD_Puts("Hum:",0,80,LCD_BLUE,LCD_WHITE);
+		sprintf(string,"Hum:  %d.%2.2d %%", vor_komma(humidity), nach_komma(humidity));
+		LCD_Puts(string,0,80,LCD_BLUE,LCD_WHITE);
+		
+		sprintf(string,"Temp: %d A %c ", test, test);
+		LCD_Puts(string,0,96,LCD_MAGENTA,LCD_WHITE);
+		
+		sprintf(string,"Pres: %d hPa", vor_komma(pressure));
+		LCD_Puts(string,0,112,LCD_RED,LCD_WHITE);
+		*/
+		//_delay_ms(50);
+		test++;
+LCD_Line(0,0,40,test,LCD_BLUE);
+		
+	}
+
+	return 0;
+}
+
+
 
 uint16_t vor_komma(uint32_t value)
 {
@@ -44,53 +115,4 @@ uint8_t nach_komma(uint32_t value)
 	return value-(temp*100);
 	
 	
-}
-int main( void )
-{
-	DDRB |= (1<<PB2); 	//Backlight pin
-	PORTB |= (1<<PB2);	//Backlight on
-	
-	 /* init display, set default orientation (optional) */
-	LCD_init();
-
-	
-	LCD_Orientation(LCD_ROT_180);
-	LCD_FillScreen( LCD_RGB(255,255,255) ); /* white where R,G,B are at max. value 255 */
-	
-	LCD_ShowImage( 0,0,64,64,(const unsigned char*)ili9163_image);/* ShowImage is for high/true color */
-	
-	temperature=0;
-	pressure=0;
-	humidity =0;
-	altitude=0;
-	
-	
-	
-
-  
-  
-  // init sensor
-  bme280_init();
- 
-  
-	while(1)
-	{
-		temperature = bme280_readTemperature(); // in °C
-		pressure = bme280_readPressure()/100; // in mbar
-		humidity = bme280_readHumidity(); // in %
-		altitude = bme280_readAltitude(102000); // 
-		
-		//itoa(humidity, string, 10);
-		//LCD_Puts("Hum:",0,80,LCD_BLUE,LCD_WHITE);
-		sprintf(string,"Hum: %d.%2.2d%%", vor_komma(humidity), nach_komma(humidity));
-		LCD_Puts(string,0,80,LCD_BLUE,LCD_WHITE);
-		
-		sprintf(string,"Temp:%d.%d C", vor_komma(temperature), nach_komma(temperature));
-		LCD_Puts(string,0,100,LCD_BLUE,LCD_WHITE);
-		
-		_delay_ms(1000);
-		
-	}
-
-	return 0;
 }

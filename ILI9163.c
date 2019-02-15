@@ -56,7 +56,7 @@
 
 #ifdef _LCD_FONT_SUPPORT
 #define FONT_MAIN
-//#include "bax_font.h"
+#include "bax_font.h"
 /* you should include at least 1 font directly here to be used as default font */
 //#include "font_screen_ascii_5x8v2_hor.h"
 //#include "font_monocle_ascii_6x8.h"

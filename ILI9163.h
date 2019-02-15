@@ -57,7 +57,7 @@
 /* functional options of library: 
     Hardware / Software SPI
 */
-//#define _LCD_SOFT_SPI
+#define _LCD_SOFT_SPI
                         /* software SPI implementation (slower but more flexible), 
                            else hardware SPI (faster, requires to set the correct 
                            SCK/MOSI pins -> requires MPU with hardware SPI, disable
