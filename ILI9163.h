@@ -7,6 +7,7 @@
 
   author, copyright:
    Henryk Richter <bax@comlab.uni-rostock.de>
+   * http://bax.comlab.uni-rostock.de/en/hardware/ili9631-atmel/
 
   version:
    0.1
@@ -163,7 +164,7 @@
       get working results
 */
 /* ******************************************************************************** */
-#define LCD_RST_DELAY  900  /* conservative: 500                                    */
+#define LCD_RST_DELAY  500  /* conservative: 500                                    */
 #define LCD_SLEEP_DELAY  1  /* 1 worked for me (and should not yield problems)      */
 #define LCD_BOOST_DELAY 30  /* 30 worked for me, following spec: 40                 */
 
@@ -176,7 +177,7 @@
 */
 /* ******************************************************************************** */
 #define LCD_Width  128
-#define LCD_Height 128 /* change to 160 for 1.8" displays */
+#define LCD_Height 160 /* change to 160 for 1.8" displays */
 
 #define LCD_ROT_0   0
 #define LCD_ROT_90  1

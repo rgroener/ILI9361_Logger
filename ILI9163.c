@@ -8,6 +8,7 @@
 
   author, copyright:
    Henryk Richter <bax@comlab.uni-rostock.de>
+   * http://bax.comlab.uni-rostock.de/en/hardware/ili9631-atmel/
 
   version:
    0.1
@@ -347,7 +348,7 @@ void LCD_FillScreen( color_t color )
 {
 #if (LCD_Height != 128 )
 	/* swap width/height if rectangular display */
-	if( lcd_orientation )
+	if( LCD_orientation )
 		LCD_FillRect( 0,0, LCD_Height, LCD_Width, color );
 	else
 #endif
@@ -400,17 +401,11 @@ void LCD_FillRect( unsigned char x, unsigned char y, unsigned char w, unsigned c
 /* (optional) rotation support affects only the routine below and the ActiveArea call */
 #ifdef _LCD_ROTATION_SUPPORT
 const unsigned char PROGMEM LCD_rots[4]   = {0,0x60,0xC0,0xA0};
-const unsigned char PROGMEM LCD_shifts[4] = {0,0,32,1};
+//const unsigned char PROGMEM LCD_shifts[4] = {0,0,32,1};
 #if (LCD_Height == 128 )
-#define LCD_xcorr( a ) ( (a) + (LCD_orientation<<0) )//original, change 5 to 0 if the display is rotatet and has an offset
+#define LCD_xcorr( a ) ( (a) + (LCD_orientation<<5) )//original, change 5 to 0 if the display is rotatet and has an offset
 #define LCD_ycorr( a ) ( (a) + (LCD_orientation&32) )//original = 32, change to 0 if display is rotatet and has an offset 
-#else
-
-/*
-
- * */
-
-/* TODO: proper offsets for other display sizes (not needed for 128x160) */
+#else/* TODO: proper offsets for other display sizes (not needed for 128x160) */
 const unsigned char PROGMEM LCD_shifts[4] = {0,1,0,1}; /* used as swap w/h flag for FillScreen() when hsize != 128 */
 #define LCD_xcorr( a ) a
 #define LCD_ycorr( a ) a
