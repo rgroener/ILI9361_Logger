@@ -51,7 +51,7 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c ILI9163.c
+SRC = $(TARGET).c ILI9163.c bme280.c i2c.c
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s

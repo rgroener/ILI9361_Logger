@@ -57,7 +57,7 @@
 /* functional options of library: 
     Hardware / Software SPI
 */
-#define _LCD_SOFT_SPI
+//#define _LCD_SOFT_SPI
                         /* software SPI implementation (slower but more flexible), 
                            else hardware SPI (faster, requires to set the correct 
                            SCK/MOSI pins -> requires MPU with hardware SPI, disable
@@ -66,8 +66,8 @@
                             /* faster but more code (about 20 Bytes)                */
 /* LCD bit depth: choose one of the three, comment out the others */
 //#define _LCD_12BIT    /* 12 BPP - runtime efficient serial data transfer,         */
-//#define _LCD_16BIT      /* default: 16 BPP (pixels directly addressable           */
-#define _LCD_18BIT      /* 18 BPP, very slow due to 24 BPP serial transfer format */
+#define _LCD_16BIT      /* default: 16 BPP (pixels directly addressable           */
+//#define _LCD_18BIT      /* 18 BPP, very slow due to 24 BPP serial transfer format */
 
 #define _LCD_ROTATION_SUPPORT /* optional: support LCD_Orientation(),               */
                               /*           rotation by n*90 degrees                 */
