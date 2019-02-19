@@ -20,7 +20,8 @@
 #include <inttypes.h>
 #include "ILI9163.h"
 #include "demoloop.h"
-#include "woodstock_64x64.h"
+//#include "woodstock_64x64.h"
+#include "Luffy64x64.h"
 #include "i2c.h"
 #include "bme280.h"
 
@@ -31,6 +32,8 @@ uint32_t humidity;
 int32_t altitude;
 
 uint16_t test=0;
+
+uint16_t graph_yalt, graph_y, graph_xalt, graph_x, offset;
 
 char string[24];
 
@@ -68,33 +71,47 @@ int main( void )
 	pressure=0;
 	humidity =0;
 	altitude=0;
+	graph_x=0;
+	graph_xalt=0;
+	graph_y=0;
+	graph_yalt=0;
+	offset=0;
  
   // init sensor
   bme280_init();
  
-  
+  LCD_Line(0,75,128, 75,LCD_BLACK);
 	while(1)
 	{
-		/*
+		
 		temperature = bme280_readTemperature(); // in °C
 		pressure = bme280_readPressure()/100; // in mbar
 		humidity = bme280_readHumidity(); // in %
 		altitude = bme280_readAltitude(102000); // 
 		
-		//itoa(humidity, string, 10);
+		
+		//LCD_ShowImage(0, 0, 64, 64, ili9163_image);
+		
+		
+		itoa(humidity, string, 10);
 		//LCD_Puts("Hum:",0,80,LCD_BLUE,LCD_WHITE);
-		sprintf(string,"Hum:  %d.%2.2d %%", vor_komma(humidity), nach_komma(humidity));
-		LCD_Puts(string,0,80,LCD_BLUE,LCD_WHITE);
+		sprintf(string,"Hum : %d.%2.2d %%", vor_komma(humidity), nach_komma(humidity));
+		LCD_Puts(string,1,80,LCD_BLUE,LCD_WHITE);
 		
-		sprintf(string,"Temp: %d A %c ", test, test);
-		LCD_Puts(string,0,96,LCD_MAGENTA,LCD_WHITE);
+		sprintf(string,"Temp: %d.%2.2d C", vor_komma(temperature), nach_komma(temperature));
+		LCD_Puts(string,1,96,LCD_MAGENTA,LCD_WHITE);
 		
-		sprintf(string,"Pres: %d hPa", vor_komma(pressure));
-		LCD_Puts(string,0,112,LCD_RED,LCD_WHITE);
-		*/
-		//_delay_ms(50);
-		test++;
-LCD_Line(0,0,40,test,LCD_BLUE);
+		sprintf(string,"Pres: %d hPa", pressure/100);
+		LCD_Puts(string,1,112,LCD_RED,LCD_WHITE);
+		
+		
+		
+		
+		LCD_Line(graph_xalt,graph_yalt,graph_x, graph_y, LCD_BLACK);
+		 
+		 
+
+		
 		
 	}
 
