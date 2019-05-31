@@ -8,7 +8,8 @@
 
 extern const unsigned char PROGMEM font_image_8_16[1520];
 extern const Bax_font font_8_16;
-#ifndef FONT_MAIN
+
+#ifdef FONT_MAIN
 /* font image width 760 height 16 */
 /* attention: characters in row-by-row order, first    */
 /* pixel is MSB of first byte (other implementations   */

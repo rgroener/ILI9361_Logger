@@ -43,6 +43,7 @@ MCU = atmega328p
 # Main Oscillator Frequency
 # This is only used to define F_OSC in all assembler and c-sources.
 F_OSC = 16000000
+
 # Output format. (can be srec, ihex, binary)
 FORMAT = ihex
 
@@ -51,7 +52,7 @@ TARGET = main
 
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = $(TARGET).c ILI9163.c bme280.c i2c.c
+SRC = $(TARGET).c ILI9163.c bme280.c i2c.c uart.c sd_raw.c partition.c fat.c byteordering.c 
 
 # List Assembler source files here.
 # Make them always end in a capital .S.  Files ending in a lowercase .s
@@ -88,7 +89,7 @@ EXTRAINCDIRS =
 CSTANDARD = -std=gnu99
 
 # Place -D or -U options here
-CDEFS = -DGLCD_DEVICE_AVR8 -DGLCD_CONTROLLER_PCD8544 -DGLCD_USE_SPI -DGLCD_USE_AVR_DELAY -D__DELAY_BACKWARD_COMPATIBLE__ 
+CDEFS = -DGLCD_DEVICE_AVR8 -DGLCD_CONTROLLER_PCD8544 -DGLCD_USE_SPI -DGLCD_USE_AVR_DELAY -D__DELAY_BACKWARD_COMPATIBLE__  -DF_CPU=3686400UL
 
 # Place -I options here
 CINCS =

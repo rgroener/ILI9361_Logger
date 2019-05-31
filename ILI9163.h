@@ -57,7 +57,7 @@
 /* functional options of library: 
     Hardware / Software SPI
 */
-#define _LCD_SOFT_SPI
+//#define _LCD_SOFT_SPI
                         /* software SPI implementation (slower but more flexible), 
                            else hardware SPI (faster, requires to set the correct 
                            SCK/MOSI pins -> requires MPU with hardware SPI, disable
@@ -257,7 +257,7 @@ unsigned char LCD_orientation = LCD_ROT_0; /* LCD_ROT_90, LCD_ROT_180, LCD_ROT_2
 #define ILI9163_CMD_NEGATIVE_GAMMA_CORRECT  0xE1
 #define ILI9163_CMD_GAM_R_SEL               0xF2
 
-#define ILI9163_RGB 8 /* RGB=0, BGR=8 */
+#define ILI9163_RGB 0 /* RGB=0, BGR=8 */
 
 
 /* 16 BPP depth for color specifications (even in 18 bit mode, to avoid 32 bit variables, appropriate scaling in the driver) */

@@ -60,8 +60,15 @@
 /* you should include at least 1 font directly here to be used as default font */
 //#include "font_screen_ascii_5x8v2_hor.h"
 //#include "font_monocle_ascii_6x8.h"
+//#include "28x32.h"
+//#include "Helsinki_14x16.h"
+//#include "test.h"
+//#include "16x16.h"
+//#include "Helsinki_8x10.h"
+//#include "Archivo_14x16.h"
 #include "font_Bitumen_ascii+dft_9x16.h"
 //#include "font_Topaz8x16_hor.h"
+
 #undef FONT_MAIN
 #endif
 
